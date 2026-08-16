@@ -35,6 +35,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+/* memcpy dipakai di ring_queue_write() tanpa deklarasi. Clang A15 menolaknya:
+ *   error: call to undeclared library function 'memcpy'
+ *   ISO C99 and later do not support implicit function declarations
+ * Modul ini hanya alat uji dan tidak diminta device.mk A37, jadi tidak ikut
+ * ROM -- diperbaiki supaya sapuan MODULES-IN memberi sinyal bersih. */
+#include <string.h>
 
 #ifdef DEBUG
 #define D(fmt, args...) \
